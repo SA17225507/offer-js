@@ -1,0 +1,57 @@
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+/**
+ * 设置一个当前指针与标记next的指针，因为把next链接反转时，当前指针与原链表下一个失去联系
+ * 时间: O(n). 逐个推进故 O(n).
+ * 空间: O(1). 只用到了常数级额外空间故 O(1).
+ */
+var reverseList = function(head) {
+    let cur = head,pre = null;
+    while(cur){
+        
+        let temp = cur.next;
+        cur.next = pre;
+        pre = cur;
+        cur = temp;
+        
+        //[cur.next,pre,cur] = [pre,cur,cur.next];
+    }
+    return pre;
+};
+/**
+ * 递归
+ */
+var reverseList = function(head) {
+    if (!head || !head.next) return head;
+    let next = head.next; // next节点，反转后是最后一个节点
+    let reverseHead = reverseList(next);
+    head.next = null; // 裁减 head
+    next.next = head; // 尾接
+    return reverseHead;
+};
+
+/**
+*尾递归
+*/
+var reverseList = function(head) {
+    return reverse(null, head);
+};
+
+function reverse (prev, curr) {
+    if (!curr) return prev;
+    // [curr.next, prev, curr] = [prev, curr.next, curr.next];
+    let tmp = curr.next;
+    curr.next = prev;
+    return reverse(curr, tmp);
+}
+
+
